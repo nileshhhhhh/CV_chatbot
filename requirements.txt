@@ -1,0 +1,11 @@
+PyPDF2
+pytesseract 
+pdf2image 
+pillow
+langchain 
+langchain-community
+sentence-transformers 
+faiss-cpu
+google-generativeai
+lanchain_google_genai
+chainlit
