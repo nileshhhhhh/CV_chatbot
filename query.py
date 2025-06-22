@@ -9,7 +9,7 @@ embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-Mi
 vectorstore = FAISS.load_local("vector_store", embeddings=embedding_model, index_name="index", allow_dangerous_deserialization=True)
 
 # Step 3: Run the query
-query = "Show me email of Nilesh Fonseka"
+query = "Show me email of Chamodi Karunathunge"
 docs = vectorstore.similarity_search(query, k=3)
 
 # Step 4: Print the results

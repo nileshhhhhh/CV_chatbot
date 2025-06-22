@@ -13,15 +13,21 @@ from google.genai import types
 
 DB_FAISS_PATH = 'vector_store'
 
-custom_prompt_template = """Use the following pieces of information to answer the user's question.
-If you don't know the answer, just say that you don't know, don't try to make up an answer.
+custom_prompt_template = """You are a helpful assistant tasked with answering questions about individual candidates based only on the provided context.
 
-Context: {context}
-Question: {question}
+Each chunk of context includes the name of the candidate it belongs to. You must ensure your answer is consistent with only one candidate and do not mix information from different people.
 
-Only return the helpful answer below and nothing else.
+If the answer is not in the context, say: "I don't know based on the provided context."
+
+Context:
+{context}
+
+Question:
+{question}
+
 Helpful answer:
 """
+
 
 def set_custom_prompt():
     """
@@ -56,14 +62,18 @@ def load_llm():
     return llm
 
 #QA Model Function
-def qa_bot():
+def qa_bot(candidate_name):
     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2",
                                        model_kwargs={'device': 'cpu'})
-    db = FAISS.load_local(DB_FAISS_PATH, embeddings, allow_dangerous_deserialization=True)
+    vector_path = os.path.join("vector_store", candidate_name)
+
+    if not os.path.exists(vector_path):
+        raise ValueError(f"No vector store found for candidate: {candidate_name}")
+
+    db = FAISS.load_local(vector_path, embeddings, allow_dangerous_deserialization=True)
     llm = load_llm()
     qa_prompt = set_custom_prompt()
     qa = retrieval_qa_chain(llm, qa_prompt, db)
-
     return qa
 
 #output function
@@ -72,30 +82,47 @@ def final_result(query):
     response = qa_result({'query': query})
     return response
 
-#chainlit code
 @cl.on_chat_start
 async def start():
-    chain = qa_bot()
-    msg = cl.Message(content="Starting the bot...")
+    msg = cl.Message(content="Welcome to the CV Chatbot!\nPlease enter the candidate's name to load their profile (e.g., `Nilesh Fonseka`).")
     await msg.send()
-    msg.content = "Hi, Welcome to CV Bot. What is your query?"
-    await msg.update()
-
-    cl.user_session.set("chain", chain)
 
 @cl.on_message
 async def main(message: cl.Message):
-    chain = cl.user_session.get("chain") 
+    user_input = message.content.strip()
+    chain = cl.user_session.get("chain")
+
+    # Check for switch command
+    if user_input.lower().startswith("switch to "):
+        new_candidate = user_input[10:].strip()
+        try:
+            new_chain = qa_bot(new_candidate)
+            cl.user_session.set("chain", new_chain)
+            cl.user_session.set("current_candidate", new_candidate)
+            await cl.Message(content=f"🔁 Switched to candidate `{new_candidate}`. You can now ask questions.").send()
+        except Exception as e:
+            await cl.Message(content=f"❌ Failed to switch: {str(e)}").send()
+        return
+
+    # If no chain yet, treat this as initial candidate load
+    if chain is None:
+        candidate_name = user_input.lower()
+        try:
+            chain = qa_bot(candidate_name)
+            cl.user_session.set("chain", chain)
+            cl.user_session.set("current_candidate", candidate_name)
+            await cl.Message(content=f"✅ Loaded CV for `{candidate_name}`. You can now ask your questions.").send()
+        except Exception as e:
+            await cl.Message(content=f"❌ Error: {str(e)}").send()
+        return
+
+    # If chain is set, treat message as a question
     cb = cl.AsyncLangchainCallbackHandler(
         stream_final_answer=True, answer_prefix_tokens=["FINAL", "ANSWER"]
     )
     cb.answer_reached = True
-    res = await chain.acall(message.content, callbacks=[cb])
-    answer = res["result"]
+    res = await chain.acall(user_input, callbacks=[cb])
     answer = res.get("result", "")
-    
-    # 🔒 Remove any unintended string representations of source docs
     if "Sources:" in answer:
         answer = answer.split("Sources:")[0].strip()
-
     await cl.Message(content=answer).send()

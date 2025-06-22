@@ -1,0 +1,73 @@
+
+--- Page 1 ---
+NILESH FONSEKA
+
++94 777 243397 | nileshfonseka0@gmail.com | Nugegoda, Sri Lanka
+LinkedIn | GitHub
+
+Experience
+
+Junior Machine Learning Engineer Jan 2025 — Present
+Engenia Solutions Pty. Ltd - Victoria, Australia (Remote)
+
+Binary classification to identify Frogs & Non-Frogs sounds:
+e Transformed WAV audio files from both classes into embeddings, preparing training, testing, and validation sets.
+e Applied cross-validation techniques to divide classes into these sets and performed embedding and training using the pre-trained model
+YAMNET from TensorFlow.
+Employee Management system development:
+e Developed the backend using Django and the frontend using ReactJS.
+e —_ Efficiently handled API requests using Django Rest Framework and managed CORS for connecting the ReactJS frontend
+e Utilized axios and state variables in the React frontend for backend communication
+Joint probability calculation of weather factors:
+e Developed a method using Discrete Bayesian networks to calculate the joint probability of three weather factors Temperature, humidity,
+wind — each with dependencies on the others.
+Backend API development for ML prediction application:
+e Implemented a Fast API backend to efficiently handle API requests and responses.
+
+Machine Learning Engineer - Intern July 2024 - Jan 2025
+Engenia Solutions Pty. Ltd - Victoria, Australia (Remote)
+
+Extraction & analysis of Australian women’s sports news:
+e Conducted web scraping using Selenium for Australian women’s sports websites and built a classification pipeline to categorize the extracted
+news as on-field and off-field using OpenAl LLM’s.
+e  Asentiment analysis was then performed using Hugging face BERT and statistical tests like Chi-square, ANOVA was conducted to analyze
+relationships between performance-related and social well-being news.
+Active frame counting on brood boxes to identify bee harvest:
+e Developed an object detection model using YOLO, Fast RCNN to identify the number of active frames inside a brood box via thermal images.
+e Initially the bounding boxes were annotated for the dataset and trained on COCO-formatted data. After hyperparameter tuning and reducing
+the model complexity, the accuracy of the model increased from 68% to 75%.
+Audio Classification for multiclass bird species:
+e —_ Built a multiclass classification model using TensorFlow Keras.
+e Applied data augmentation (noise addition, pitch shifting) and regularization techniques (Ridge L2, dropout) to improve generalization.
+Deployed a Flask-based web app for real-time predictions.
+Power BI Dashboard Development:
+e Designed interactive dashboards for grant distribution analysis across Australian universities using DAX and Power Query, optimizing data
+processing for efficient insights
+
+Data Analytics Intern Feb 2024 — June 2024
+Dialog Network Services (PVT) Ltd
+Power BI Dashboard Development & Automating workflows
+e Developed and optimized interactive dashboards for Site Acquisition data visualization using DAX and Power Query.
+e Streamlined and automated Site Acquisition processes using Workhub24, enhancing operational efficiency.
+
+Research
+Quantum-inspired methods for training machine learning models
+
+e Developed a Quadratic Unconstrained Binary Optimization (QUBO) algorithm to enhance multiple regression modeling & utilized D-Wave
+Quantum Computers to explore quantum speedup potential.
+e This research is in the process of submission for Modern Education and Computer Science Press journal
+
+Education Skills
+
+BSc (Hons) in Computational Mathematics Languages & Frameworks: Python, R, SQL, Flask, Django, Langchain
+(Computer Science & Applied Mathematics) Machine Learning & Deep Learning : NumPy, Pandas, Matplotlib,
+University of Colombo - Faculty of Science | GPA - 3.178 Seaborn, Scikit Learn, TensorFlow, PyTorch, YOLO, Hugging Face,
+Certificate in Business Administration NLP, LLM
+
+Wisdom Business Academy Web Development : HTML, CSS, JavaScript, ReactJS
+
+St. Peter’s College - Colombo 04 Miscellaneous : Selenium, AWS Services (S3, EC2, EBS) , Docker , GitHub
+GCE A/L’s — Combined Maths (A), Physics(C), Chemistry (C) Actions , OOP concepts, Fast API, CI/CD, JIRA & Confluence, Power BI
+
+GCE O/L’s-—9 A’s (DAX, Power Query)
+

@@ -2,6 +2,8 @@ import os
 from pdf2image import convert_from_path
 from PIL import Image
 import pytesseract
+import re
+import json
 
 # Optional: If Tesseract is not in PATH
 # pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
